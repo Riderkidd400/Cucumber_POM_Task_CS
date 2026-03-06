@@ -13,6 +13,7 @@ import io.cucumber.testng.CucumberOptions;
 		plugin = {"pretty",
 				
 				"html:target/Reports/HTMLReport.html",
+				"rerun:test-output/failedreports.txt",
 				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
 				
 					

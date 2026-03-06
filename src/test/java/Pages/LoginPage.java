@@ -29,7 +29,9 @@ public class LoginPage {
 			
 			
 //			loginpage.click();
+			
 			username.sendKeys(user_name);
+		
 			password.sendKeys(pass_word);
 			
 			

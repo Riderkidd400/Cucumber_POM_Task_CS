@@ -1,6 +1,8 @@
 package stepDefs;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -8,9 +10,11 @@ import org.testng.Assert;
 
 import Pages.DeleteArticle;
 import Pages.LoginPage;
+import Pages.Logout;
 import Pages.addArticle;
 import Pages.updateArticle;
 import base.TestBase;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -24,6 +28,7 @@ public class stepDefinition {
 	addArticle addarticlepage;
 	updateArticle updateArticlepage;
 	DeleteArticle deletearticle;
+	Logout logoutpage;
 	
 
 	public stepDefinition() {
@@ -33,6 +38,8 @@ public class stepDefinition {
 		addarticlepage = new addArticle(driver);
 		updateArticlepage = new updateArticle(driver); 
 		deletearticle = new DeleteArticle(driver);
+		logoutpage = new Logout(driver);
+		
 	}
 
 
@@ -155,10 +162,37 @@ public class stepDefinition {
 			
 			Assert.assertTrue(true,"Article Deleted Sucessfully");
 		}
+	
+	}
+	
+	@Given("user logout the page")
+	public void user_logout_the_page() {
+		
+	    logoutpage.clickonimage();
+	    
+	    logoutpage.logout(driver);
 	}
 
+	
+	@When("user enters the Invalid {string} and {string}")
+	public void user_enters_the_invalid_and(String string, String string2) {
+		
+		loginpage.logintothewebsite(string, string2);
+		
+	}
 
+	@After
+	public void attachscreenshot(io.cucumber.java.Scenario scenario) {
+		
+		if(scenario.isFailed()) {
+			
+			TakesScreenshot src = (TakesScreenshot) driver;
+			
+			byte[] img = src.getScreenshotAs(OutputType.BYTES);
+			
+			scenario.attach(img, "image/png", "FailedScenarioImage");
+		
 
-
-
+		}
+	}
 }
