@@ -9,12 +9,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import Pages.DeleteArticle;
+import Pages.InvalidPage;
 import Pages.LoginPage;
-import Pages.Logout;
+
 import Pages.addArticle;
 import Pages.updateArticle;
 import base.TestBase;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -28,7 +31,8 @@ public class stepDefinition {
 	addArticle addarticlepage;
 	updateArticle updateArticlepage;
 	DeleteArticle deletearticle;
-	Logout logoutpage;
+	InvalidPage invalidpage;
+	//Logout logoutpage;
 	
 
 	public stepDefinition() {
@@ -38,7 +42,8 @@ public class stepDefinition {
 		addarticlepage = new addArticle(driver);
 		updateArticlepage = new updateArticle(driver); 
 		deletearticle = new DeleteArticle(driver);
-		logoutpage = new Logout(driver);
+		invalidpage = new InvalidPage(driver);
+		//logoutpage = new Logout(driver);
 		
 	}
 
@@ -74,30 +79,46 @@ public class stepDefinition {
 
 		addarticlepage.clickonaddafrticle(driver);
 	}
-	@Then("user enters the title {string}")
-	public void user_enters_the_title(String string) {
-		
+	
+	@Then("user enters the title {string} Header")
+	public void user_enters_the_title_header(String string) {
 		addarticlepage.settitle(string);
-
-
 	}
-	@Then("user enters the Description")
-	public void user_enters_the_description() {
-
-		addarticlepage.setDescription(driver, "This Case Study is about the Sslenium E2");
-
+	@Then("user enters the {string} info")
+	public void user_enters_the_info(String string) {
+		
+		addarticlepage.setDescription(driver, string);
+		//
 	}
-	@Then("user enters the body details")
-	public void user_enters_the_body_details() {
-
-		addarticlepage.setbodymessage(driver, "We have learned all the Basic to Advanced concepts of selenium ");
+	@Then("user enters the {string} details")
+	public void user_enters_the_details(String string) {
+		
+		addarticlepage.setbodymessage(driver,string);
 	}
-//	@Then("user clicks on publish button")
-//	public void user_clicks_on_publish_button() {
+//	@Then("user enters the title {string}")
+//	public void user_enters_the_title(String string) {
+//		
+//		addarticlepage.settitle(string);
 //
-//		addarticlepage.clcikpublish(driver);
 //
 //	}
+//	@Then("user enters the Description")
+//	public void user_enters_the_description() {
+//
+//		addarticlepage.setDescription(driver, "This Case Study is about the Sslenium E2");
+//
+//	}
+//	@Then("user enters the body details")
+//	public void user_enters_the_body_details() {
+//
+//		addarticlepage.setbodymessage(driver, "We have learned all the Basic to Advanced concepts of selenium ");
+//	}
+	@Then("user clicks on publish button")
+	public void user_clicks_on_publish_button() {
+
+		addarticlepage.clickonpublish(driver);
+
+	}
 
 	@Given("user validates the Existing Article {string}")
 	public void user_validates_the_existing_article(String string) {
@@ -164,35 +185,17 @@ public class stepDefinition {
 		}
 	
 	}
+	@Given("user refresh the page")
+	public void user_refresh_the_page() {
+		
+	   invalidpage.refresh(driver);
+	}
+	@Then("user searches Home button")
+	public void user_searches_home_button() {
+	   
+		invalidpage.clickohhomepage(driver);
+	}
 	
-	@Given("user logout the page")
-	public void user_logout_the_page() {
-		
-	    logoutpage.clickonimage();
-	    
-	    logoutpage.logout(driver);
-	}
 
 	
-	@When("user enters the Invalid {string} and {string}")
-	public void user_enters_the_invalid_and(String string, String string2) {
-		
-		loginpage.logintothewebsite(string, string2);
-		
-	}
-
-	@After
-	public void attachscreenshot(io.cucumber.java.Scenario scenario) {
-		
-		if(scenario.isFailed()) {
-			
-			TakesScreenshot src = (TakesScreenshot) driver;
-			
-			byte[] img = src.getScreenshotAs(OutputType.BYTES);
-			
-			scenario.attach(img, "image/png", "FailedScenarioImage");
-		
-
-		}
-	}
 }

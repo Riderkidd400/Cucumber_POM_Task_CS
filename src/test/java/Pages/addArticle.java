@@ -44,20 +44,20 @@ public class addArticle {
 
 	}
 	public void setDescription(WebDriver driver, String Description) {
-		
+
 		//driver.findElement(By.cssSelector("div.nav-link.dropdown-toggle.cursor-pointer")).click();
-		
+
 		System.out.println("Waiting for Description field to be visible");
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(
-		    By.cssSelector("input[placeholder=\"What's this article about?\"]")
-		));
-		
+				By.cssSelector("input[placeholder=\"What's this article about?\"]")
+				));
 
-	    System.out.println("Description field is ready");
 
-	    element.sendKeys(Description);
+		System.out.println("Description field is ready");
+
+		element.sendKeys(Description);
 
 	}
 
@@ -65,14 +65,13 @@ public class addArticle {
 
 		body.sendKeys(BodyMessage);
 
+
+
+	}
+	public void clickonpublish(WebDriver driver) {
+
 		WebElement publishButton = driver.findElement(By.cssSelector("button.btn.btn-lg.btn-primary[type='submit']"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", publishButton);
 		publishButton.click();
-		
-		
-		
-
 	}
-
-	
 }

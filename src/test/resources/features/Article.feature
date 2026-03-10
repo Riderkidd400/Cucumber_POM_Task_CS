@@ -7,13 +7,21 @@ Given user opens the Url
 When user enters the credentials
 Then user clicks on the login button
 
-Scenario: User Add New Article
-Given user is on Home page
-When user clicks on the New Article
-Then user enters the title "Manikandan TC001"
-Then user enters the Description
-Then user enters the body details
-#Then user clicks on publish button
+Scenario Outline: User adds a new article
+    Given user is on Home page
+    When user clicks on the New Article
+    Then user enters the title "<title>" Header
+    And user enters the "<Description>" info
+    And user enters the "<body>" details
+    And user clicks on publish button
+
+    Examples:
+      | title       | Description        | body                  |
+      | Selenium    | LEarning Selenium  | Content deep learning |
+      | Cucumber | Learning Cucumber    | Content deep learning    |
+      | POM | Learning POM   | Content deep learning    |
+		
+
 
 Scenario: User Edit the Article
 Given user validates the Existing Article "Manikandan TC001"
@@ -28,7 +36,7 @@ Then User validates the Alert message
 Then user accepts the alert
 And user validates the deleted article "Manikandan TC001" is present on the Articlepage
 
-Scenario: Invalid login
-Given user logout the page
-When user enters the Invalid "Wrongurl@gmail.com" and "NoWorries"
-Then user clicks on the login button
+Scenario: Failed case
+Given user refresh the page
+Then user searches Home button
+

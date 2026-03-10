@@ -1,7 +1,13 @@
 package stepDefs;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 
 import base.TestBase;
 import io.cucumber.java.After;
@@ -18,18 +24,16 @@ public class Hooks {
 		
 	}
 	
+	
 	@After
-	public void teardown(Scenario scenario) {
-		
-		if(scenario.isFailed()) {
-			
-			TakesScreenshot src = (TakesScreenshot)TestBase.getDriver();
-			byte[] img = src.getScreenshotAs(OutputType.BYTES);
-			scenario.attach(img, "image/png", "FailedScenarioImage");
-			
+	public void tearDown(Scenario scenario) {
+		if (scenario.isFailed()) {
+			TakesScreenshot screen = (TakesScreenshot) TestBase.getDriver();
+			byte[] imgBytes = screen.getScreenshotAs(OutputType.BYTES);
+			scenario.attach(imgBytes, "image/png", "ScreenImage");
 		}
-		
+//		TestBase.tearDown();
 	}
 	
-	
+
 }
